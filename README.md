@@ -1,5 +1,5 @@
 # CaesarSquareCipher
-Just a python implementation of Caesar's Square Cipher
+Python and C implementations of Caesar's square cipher
 
 # What is Caesar's square cipher (aka box cipher)?
 Caesar Box is a transposition cipher used in the Roman Empire, in which letters of the message are written in rows in a square 
