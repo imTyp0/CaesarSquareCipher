@@ -2,32 +2,24 @@ from math import sqrt, ceil
 from re import findall
 from sys import argv
 
-def encode():
-	plainText = input('Enter string to encode:\n>').replace(' ', '')
-	nearestSquare = ceil(sqrt(len(plainText)))**2
-	paddedPlain = plainText + '='*(nearestSquare-len(plainText))
-	sepPlain = findall('.'*int(sqrt(nearestSquare)), paddedPlain)
-	cipherText = []
+def cipher(mode):
+	uInput = input('Enter string to encode/decode:\n>').replace(' ', '')
+	nearestSquare = ceil(sqrt(len(uInput)))**2
+	paddedInput = uInput + '='*(nearestSquare-len(uInput))
+	sepInput = findall('.'*int(sqrt(nearestSquare)), paddedInput)
+	output = []
 
 	for i in range(int(sqrt(nearestSquare))):
-		for bit in sepPlain:
-			cipherText.append(bit[i])
-	return ''.join(cipherText)
+		for bit in sepInput:
+			output.append(bit[i])
+	
+	if '-d' in mode:
+		output = filter(lambda x: x if x != '=' else '', output)
 
-def decode():
-	cipherText = input('Enter string to decode:\n>')
-	sepCipher = findall('.'*int(sqrt(len(cipherText))),cipherText)
-	plainText = []
-	for i in range(int(sqrt(len(cipherText)))):
-		for bit in sepCipher:
-			plainText.append(bit[i])
-	return ''.join(plainText).replace('=', '')
-
+	return ''.join(output)
 
 args = argv[1:]
-if '-e' in args:
-	print(encode())
-elif '-d' in args:
-	print(decode())
-else:
+if args == [] or ("-e" not in args and "-d" not in args):
 	print('Invalid arguments. Try -e or -d.')
+else:
+	print(cipher(args[0]))
